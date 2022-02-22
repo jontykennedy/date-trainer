@@ -207,23 +207,33 @@ def main():
         selection = input("Mode: ")
         print("-------------------------------------------------")
         if (selection == "1"):
-            full_quiz_mode()
+            enter_loop(full_quiz_mode)
         elif (selection == "2"):
-            year_code_quiz_mode()
+            enter_loop(year_code_quiz_mode)
         elif (selection == "3"):
-            month_code_quiz_mode()
+            enter_loop(month_code_quiz_mode)
         elif (selection == "4"):
-            day_code_quiz_mode()
+            enter_loop(day_code_quiz_mode)
         elif (selection == "5"):
-            leap_year_quiz_mode()
+            enter_loop(leap_year_quiz_mode)
         elif (selection == "6"):
-            century_code_quiz_mode()
+            enter_loop(century_code_quiz_mode)
         elif (selection == "7"):
             day_calculator()
+            input("\nPress enter to return to home...")
         elif (selection == "8"):
             print("Goodbye\n-------------------------------------------------")
             sys.exit()
-        input("\nPress enter to return to home...")
+
+
+def enter_loop(mode):
+    while(True):
+        mode()
+        option = input(
+            "Press enter to restart or X to return to the home menu: ")
+        if (option.lower() == "x"):
+            break
+        print("")
 
 
 if __name__ == "__main__":
