@@ -113,7 +113,7 @@ answered_year_code, answered_leap_year, answered_day):
 
 def main():
     while(True):
-        print("--------------------------------------------")
+        print("-------------------------------------------------")
         full_date = input("Enter a date (dd.mm.yyyy): ")
         day_code, month_code, full_year_code, weekday_code = calculate_day(full_date)
         answered_day_code, answered_month_code, answered_year_code, answered_leap_year, answered_day = quiz()
