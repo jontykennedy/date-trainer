@@ -148,21 +148,43 @@ def full_quiz_mode():
 
 
 def year_code_quiz_mode():
-    year = input("Enter a year: ")
+    random_year = random.randint(0, 3000)
+    print(f"Target: {random_year}")
     answered_year_code = input("Year code? ")
-    full_year_code = calculate_full_year_code(int(year)) % 7
+    full_year_code = calculate_full_year_code(int(random_year)) % 7
     print(
         f"Answered year code: {answered_year_code}, actual year code: {full_year_code}")
 
 
-# def month_code_quiz_mode():
+def month_code_quiz_mode():
+    random_month = random.randint(1, 12)
+    print(f"Target: {random_month}")
+    answered_month_code = input("Month code? ")
+    month_code = calculate_month_code(random_month)
+    print(
+        f"Answered month code: {answered_month_code}, actual month code: {month_code}")
 
 
-# def day_code_quiz_mode():
+def day_code_quiz_mode():
+    random_day = random.randint(1, 31)
+    print(f"Target: {random_day}")
+    answered_day_code = input("Day code? ")
+    day_code = calculate_day_code(random_day)
+    print(
+        f"Answered day code: {answered_day_code}, actual day code: {day_code}")
+
+
+def century_code_quiz_mode():
+    random_century = random.randint(1, 3000) // 100 * 100
+    print(f"Target: {random_century}")
+    answered_century_code = input("Century code? ")
+    century_code = calculate_century_code(random_century)
+    print(
+        f"Answered century code: {answered_century_code}, actual century code: {century_code}")
 
 
 def leap_year_quiz_mode():
-    random_year = random.randint(0, 3000)
+    random_year = random.randint(1, 3000)
     answer = input(f"Is {random_year} a leap year? (yes/no) ")
     actual = "yes" if is_a_leap_year(random_year) else "no"
     if (answer.lower() == actual):
@@ -180,7 +202,8 @@ def day_calculator():
 def main():
     while(True):
         print("-------------------------------------------------")
-        print("MODES:\n(1) Full Quiz \n(2) Year Code Quiz \n(3) Month Code Quiz \n(4) Day Code Quiz \n(5) Leap Year Quiz \n(6) Day Calculator\n(7) Exit")
+        print("MODES:\n(1) Full Quiz \n(2) Year Code Quiz \n(3) Month Code Quiz \n"
+              + "(4) Day Code Quiz \n(5) Leap Year Quiz \n(6) Century Code Quiz \n(7) Day Calculator\n(8) Exit")
         selection = input("Mode: ")
         print("-------------------------------------------------")
         if (selection == "1"):
@@ -194,8 +217,10 @@ def main():
         elif (selection == "5"):
             leap_year_quiz_mode()
         elif (selection == "6"):
-            day_calculator()
+            century_code_quiz_mode()
         elif (selection == "7"):
+            day_calculator()
+        elif (selection == "8"):
             print("Goodbye\n-------------------------------------------------")
             sys.exit()
         input("\nPress enter to return to home...")
