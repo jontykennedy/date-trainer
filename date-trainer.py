@@ -1,4 +1,5 @@
-from select import select
+import datetime
+import random
 import sys
 
 month_codes = {
@@ -35,7 +36,7 @@ weekday_codes = {
 
 
 def validate_and_extract_date(full_date):
-    date = full_date.split(".")
+    date = full_date.split("/")
     day = int(date[0])
     month = int(date[1])
     full_year = int(date[2])
@@ -126,12 +127,23 @@ def score(day_code, month_code, full_year_code, weekday_code, leap_year, answere
         f"Answered day: {answered_day}, actual day: {weekday_codes.get(weekday_code)}")
 
 
+def generate_random_date(start, end):
+    return start + (end - start) * random.random()
+
+
 def full_quiz_mode():
-    full_date = input("Enter a date (dd.mm.yyyy): ")
+    start = datetime.date(year=1, month=1, day=1)
+    end = datetime.date(year=3000, month=12, day=31)
+    full_date = generate_random_date(start, end)
+    sanitised_year = full_date.strftime("%Y").lstrip("0")
+    full_date_num = full_date.strftime(f"%d/%m/{sanitised_year}")
+    full_date_string = full_date.strftime(f"%d %B {sanitised_year}")
+    print(f"Target: {full_date_string}")
+
     day_code, month_code, full_year_code, weekday_code = calculate_day_components(
-        full_date)
+        full_date_num)
     answered_day_code, answered_month_code, answered_year_code, answered_leap_year, answered_day = quiz()
-    score(day_code, month_code, full_year_code, weekday_code, is_a_leap_year(int(full_date.split(".")[2])),
+    score(day_code, month_code, full_year_code, weekday_code, is_a_leap_year(int(full_date_num.split("/")[2])),
           answered_day_code, answered_month_code, answered_year_code, answered_leap_year, answered_day)
 
 
@@ -143,8 +155,24 @@ def year_code_quiz_mode():
         f"Answered year code: {answered_year_code}, actual year code: {full_year_code}")
 
 
+# def month_code_quiz_mode():
+
+
+# def day_code_quiz_mode():
+
+
+def leap_year_quiz_mode():
+    random_year = random.randint(0, 3000)
+    answer = input(f"Is {random_year} a leap year? (yes/no) ")
+    actual = "yes" if is_a_leap_year(random_year) else "no"
+    if (answer.lower() == actual):
+        print("Correct")
+        return
+    print("Incorrect")
+
+
 def day_calculator():
-    full_date = input("Enter a date (dd.mm.yyyy): ")
+    full_date = input("Enter a date (dd/mm/yyyy): ")
     _, _, _, weekday_code = calculate_day_components(full_date)
     print(f"{weekday_codes.get(weekday_code)}")
 
