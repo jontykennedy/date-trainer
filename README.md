@@ -1,3 +1,3 @@
 # date-trainer
 
-Python script to calculate the day for a given date
+Python script to help you train being able to calculate the day for any given date
