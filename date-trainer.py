@@ -1,3 +1,4 @@
+from select import select
 import sys
 
 month_codes = {
@@ -84,7 +85,7 @@ def leap_year_adjustment(month, full_year):
         return -1
     return 0
 
-def calculate_day(full_date):
+def calculate_day_components(full_date):
     day, month, full_year = validate_and_extract_date(full_date)
     day_code = calculate_day_code(day)
     month_code = calculate_month_code(month)
@@ -92,6 +93,7 @@ def calculate_day(full_date):
     weekday_code = (day_code + month_code + full_year_code + leap_year_adjustment(month, full_year)) % 7
 
     return day_code, month_code, full_year_code, weekday_code
+
 
 def quiz():
     print("\nQUIZ:")
@@ -111,14 +113,46 @@ answered_year_code, answered_leap_year, answered_day):
     print(f"Answered leap year: {answered_leap_year}, actual leap year: {leap_year}")
     print(f"Answered day: {answered_day}, actual day: {weekday_codes.get(weekday_code)}")
 
+def full_quiz_mode():
+    full_date = input("Enter a date (dd.mm.yyyy): ")
+    day_code, month_code, full_year_code, weekday_code = calculate_day_components(full_date)
+    answered_day_code, answered_month_code, answered_year_code, answered_leap_year, answered_day = quiz()
+    score(day_code, month_code, full_year_code, weekday_code, is_a_leap_year(int(full_date.split(".")[2])), 
+        answered_day_code, answered_month_code, answered_year_code, answered_leap_year, answered_day)
+
+def year_code_quiz_mode():
+    year = input("Enter a year: ")
+    answered_year_code = input("Year code? ")
+    full_year_code = calculate_full_year_code(int(year)) % 7
+    print(f"Answered year code: {answered_year_code}, actual year code: {full_year_code}")
+
+def day_calculator():
+    full_date = input("Enter a date (dd.mm.yyyy): ")
+    _, _, _, weekday_code = calculate_day_components(full_date)
+    print(f"{weekday_codes.get(weekday_code)}")
+
 def main():
     while(True):
         print("-------------------------------------------------")
-        full_date = input("Enter a date (dd.mm.yyyy): ")
-        day_code, month_code, full_year_code, weekday_code = calculate_day(full_date)
-        answered_day_code, answered_month_code, answered_year_code, answered_leap_year, answered_day = quiz()
-        score(day_code, month_code, full_year_code, weekday_code, is_a_leap_year(int(full_date.split(".")[2])), 
-        answered_day_code, answered_month_code, answered_year_code, answered_leap_year, answered_day)
+        print("MODES:\n(1) Full Quiz \n(2) Year Code Quiz \n(3) Month Code Quiz \n(4) Day Code Quiz \n(5) Leap Year Quiz \n(6) Day Calculator\n(7) Exit")
+        selection = input("Mode: ")
+        print("-------------------------------------------------")
+        if (selection == "1"):
+            full_quiz_mode()
+        elif (selection == "2"):
+            year_code_quiz_mode()
+        elif (selection == "3"):
+            month_code_quiz_mode()
+        elif (selection == "4"):
+            day_code_quiz_mode()
+        elif (selection == "5"):
+            leap_year_quiz_mode()
+        elif (selection == "6"):
+            day_calculator()
+        elif (selection == "7"):
+            print("Goodbye\n-------------------------------------------------")
+            sys.exit()
+        input("\nPress enter to return to home...")
     
 if __name__ == "__main__":
     main()
