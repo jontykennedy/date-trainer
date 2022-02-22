@@ -39,7 +39,7 @@ def calculate_month_code(month):
     return month_codes.get(month)
 
 def calculate_century_code(century):
-    century = century % 40
+    century = century % 400
     return century_codes.get(century)
 
 def calculate_full_year_code(full_year):
@@ -55,15 +55,15 @@ def leap_year_adjustment(month, full_year):
     year = full_year % 100
     
     if (year == 0 and full_year % 400 == 0):
-        print(f"Note, {full_year} is a leap year")
+        print(f"{full_year} is a leap year")
         if (month ==  1 or month == 2):
             return -1
     elif (full_year % 4 == 0):
-        print(f"Note, {full_year} is a leap year")
+        print(f"{full_year} is a leap year")
         if (month ==  1 or month == 2):
             return -1
     else:
-        print(f"Note, {full_year} is not a leap year")
+        print(f"{full_year} is not a leap year")
     return 0
 
 def main():
@@ -83,7 +83,7 @@ def main():
     print(f"Year Code: {full_year_code}")
 
     weekday_code = (day_code + month_code + full_year_code + leap_year_adjustment(month, full_year)) % 7
-    print(f"Full Date: {weekday_codes.get(weekday_code)}")
+    print(f"{full_date} was a {weekday_codes.get(weekday_code)}")
     
 if __name__ == "__main__":
     main()
