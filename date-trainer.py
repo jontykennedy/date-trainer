@@ -34,6 +34,21 @@ weekday_codes = {
     6: "Saturday",
 }
 
+num_to_month = {
+    1: "January",
+    2: "February",
+    3: "March",
+    4: "April",
+    5: "May",
+    6: "June",
+    7: "July",
+    8: "August",
+    9: "September",
+    10: "October",
+    11: "November",
+    12: "December"
+}
+
 
 def validate_and_extract_date(full_date):
     date = full_date.split("/")
@@ -69,10 +84,10 @@ def calculate_full_year_code(full_year):
     year = full_year % 100
     century = full_year - year
 
-    year_code = (year + (year // 4)) % 7
+    year_code = year + (year // 4)
     century_code = calculate_century_code(century)
 
-    return year_code + century_code
+    return (year_code + century_code) % 7
 
 
 def is_a_leap_year(full_year):
@@ -158,7 +173,7 @@ def year_code_quiz_mode():
 
 def month_code_quiz_mode():
     random_month = random.randint(1, 12)
-    print(f"Target: {random_month}")
+    print(f"Target: {num_to_month.get(random_month)}")
     answered_month_code = input("Month code? ")
     month_code = calculate_month_code(random_month)
     print(
