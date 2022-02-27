@@ -50,6 +50,15 @@ num_to_month = {
 }
 
 
+def handle_num_input(message):
+    while(True):
+        answer = input(message)
+        try:
+            return int(answer)
+        except (TypeError, ValueError):
+            print("Please enter an integer")
+
+
 def validate_and_extract_date(full_date):
     date = full_date.split("/")
     day = int(date[0])
@@ -119,9 +128,9 @@ def calculate_day_components(full_date):
 
 def quiz():
     print("\nQUIZ:")
-    answered_year_code = input("Year code? ")
-    answered_month_code = input("Month code? ")
-    answered_day_code = input("Day code? ")
+    answered_year_code = handle_num_input("Year code? ")
+    answered_month_code = handle_num_input("Month code? ")
+    answered_day_code = handle_num_input("Day code? ")
     answered_leap_year = input("Leap year? ")
     answered_day = input("What day? ")
     return answered_day_code, answered_month_code, answered_year_code, answered_leap_year, answered_day
@@ -165,7 +174,7 @@ def full_quiz_mode():
 def year_code_quiz_mode():
     random_year = random.randint(0, 3000)
     print(f"Target: {random_year}")
-    answered_year_code = input("Year code? ")
+    answered_year_code = handle_num_input("Year code? ")
     full_year_code = calculate_full_year_code(int(random_year)) % 7
     print(
         f"Answered year code: {answered_year_code}, actual year code: {full_year_code}")
@@ -174,7 +183,7 @@ def year_code_quiz_mode():
 def month_code_quiz_mode():
     random_month = random.randint(1, 12)
     print(f"Target: {num_to_month.get(random_month)}")
-    answered_month_code = input("Month code? ")
+    answered_month_code = handle_num_input("Month code? ")
     month_code = calculate_month_code(random_month)
     print(
         f"Answered month code: {answered_month_code}, actual month code: {month_code}")
@@ -183,7 +192,7 @@ def month_code_quiz_mode():
 def day_code_quiz_mode():
     random_day = random.randint(1, 31)
     print(f"Target: {random_day}")
-    answered_day_code = input("Day code? ")
+    answered_day_code = handle_num_input("Day code? ")
     day_code = calculate_day_code(random_day)
     print(
         f"Answered day code: {answered_day_code}, actual day code: {day_code}")
@@ -192,7 +201,7 @@ def day_code_quiz_mode():
 def century_code_quiz_mode():
     random_century = random.randint(1, 3000) // 100 * 100
     print(f"Target: {random_century}")
-    answered_century_code = input("Century code? ")
+    answered_century_code = handle_num_input("Century code? ")
     century_code = calculate_century_code(random_century)
     print(
         f"Answered century code: {answered_century_code}, actual century code: {century_code}")
@@ -219,24 +228,24 @@ def main():
         print("-------------------------------------------------")
         print("MODES:\n(1) Full Quiz \n(2) Year Code Quiz \n(3) Month Code Quiz \n"
               + "(4) Day Code Quiz \n(5) Leap Year Quiz \n(6) Century Code Quiz \n(7) Day Calculator\n(8) Exit")
-        selection = input("Mode: ")
+        selection = handle_num_input("Mode: ")
         print("-------------------------------------------------")
-        if (selection == "1"):
+        if (selection == 1):
             enter_loop(full_quiz_mode)
-        elif (selection == "2"):
+        elif (selection == 2):
             enter_loop(year_code_quiz_mode)
-        elif (selection == "3"):
+        elif (selection == 3):
             enter_loop(month_code_quiz_mode)
-        elif (selection == "4"):
+        elif (selection == 4):
             enter_loop(day_code_quiz_mode)
-        elif (selection == "5"):
+        elif (selection == 5):
             enter_loop(leap_year_quiz_mode)
-        elif (selection == "6"):
+        elif (selection == 6):
             enter_loop(century_code_quiz_mode)
-        elif (selection == "7"):
+        elif (selection == 7):
             day_calculator()
             input("\nPress enter to return to home...")
-        elif (selection == "8"):
+        elif (selection == 8):
             print("Goodbye\n-------------------------------------------------")
             sys.exit()
 
