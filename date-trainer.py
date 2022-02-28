@@ -155,6 +155,27 @@ def generate_random_date(start, end):
     return start + (end - start) * random.random()
 
 
+def quick_fire_quiz_mode():
+    start = datetime.date(year=1, month=1, day=1)
+    end = datetime.date(year=3000, month=12, day=31)
+    full_date = generate_random_date(start, end)
+    sanitised_year = full_date.strftime("%Y").lstrip("0")
+    full_date_num = full_date.strftime(f"%d/%m/{sanitised_year}")
+    full_date_string = full_date.strftime(f"%d %B {sanitised_year}")
+    print(f"Target: {full_date_string}")
+
+    day_code, month_code, full_year_code, weekday_code = calculate_day_components(
+        full_date_num)
+    answered_day = input("What day? ")
+    actual_day = weekday_codes.get(weekday_code)
+    if (answered_day.lower() == actual_day.lower()):
+        print("Correct")
+        return
+    print(
+        f"Incorrect\nAnswers:\nDay = {actual_day}\nDay Code = {day_code}\nMonth Code = {month_code}"
+        + f"\nYear Code = {full_year_code}\nLeap Year = {is_a_leap_year(int(sanitised_year))}")
+
+
 def full_quiz_mode():
     start = datetime.date(year=1, month=1, day=1)
     end = datetime.date(year=3000, month=12, day=31)
@@ -167,7 +188,7 @@ def full_quiz_mode():
     day_code, month_code, full_year_code, weekday_code = calculate_day_components(
         full_date_num)
     answered_day_code, answered_month_code, answered_year_code, answered_leap_year, answered_day = quiz()
-    score(day_code, month_code, full_year_code, weekday_code, is_a_leap_year(int(full_date_num.split("/")[2])),
+    score(day_code, month_code, full_year_code, weekday_code, is_a_leap_year(int(sanitised_year)),
           answered_day_code, answered_month_code, answered_year_code, answered_leap_year, answered_day)
 
 
@@ -226,26 +247,28 @@ def day_calculator():
 def main():
     while(True):
         print("-------------------------------------------------")
-        print("MODES:\n(1) Full Quiz \n(2) Year Code Quiz \n(3) Month Code Quiz \n"
-              + "(4) Day Code Quiz \n(5) Leap Year Quiz \n(6) Century Code Quiz \n(7) Day Calculator\n(8) Exit")
+        print("MODES:\n(1) Quick Fire Quiz\n(2) Full Quiz \n(3) Year Code Quiz \n(4) Month Code Quiz \n"
+              + "(5) Day Code Quiz \n(6) Leap Year Quiz \n(7) Century Code Quiz \n(8) Day Calculator\n(9) Exit")
         selection = handle_num_input("Mode: ")
         print("-------------------------------------------------")
         if (selection == 1):
-            enter_loop(full_quiz_mode)
+            enter_loop(quick_fire_quiz_mode)
         elif (selection == 2):
-            enter_loop(year_code_quiz_mode)
+            enter_loop(full_quiz_mode)
         elif (selection == 3):
-            enter_loop(month_code_quiz_mode)
+            enter_loop(year_code_quiz_mode)
         elif (selection == 4):
-            enter_loop(day_code_quiz_mode)
+            enter_loop(month_code_quiz_mode)
         elif (selection == 5):
-            enter_loop(leap_year_quiz_mode)
+            enter_loop(day_code_quiz_mode)
         elif (selection == 6):
-            enter_loop(century_code_quiz_mode)
+            enter_loop(leap_year_quiz_mode)
         elif (selection == 7):
+            enter_loop(century_code_quiz_mode)
+        elif (selection == 8):
             day_calculator()
             input("\nPress enter to return to home...")
-        elif (selection == 8):
+        elif (selection == 9):
             print("Goodbye\n-------------------------------------------------")
             sys.exit()
 
