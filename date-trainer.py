@@ -81,7 +81,10 @@ def calculate_day_code(day):
 
 
 def calculate_month_code(month):
-    return month_codes.get(month)
+    month_code = month_codes.get(month)
+    if (month_code != None):
+        return month_code
+    raise Exception("Invalid month input")
 
 
 def calculate_century_code(century):
