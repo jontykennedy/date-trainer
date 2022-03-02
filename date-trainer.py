@@ -1,6 +1,7 @@
 import datetime
 import random
 import sys
+import time
 
 month_codes = {
     1: 6,
@@ -82,9 +83,9 @@ def calculate_day_code(day):
 
 def calculate_month_code(month):
     month_code = month_codes.get(month)
-    if (month_code != None):
-        return month_code
-    raise Exception("Invalid month input")
+    if (month_code == None):
+        raise Exception("Invalid month input")
+    return month_code
 
 
 def calculate_century_code(century):
@@ -169,10 +170,14 @@ def quick_fire_quiz_mode():
 
     day_code, month_code, full_year_code, weekday_code = calculate_day_components(
         full_date_num)
+    start_time = time.time()
     answered_day = input("What day? ")
+    end_time = time.time()
     actual_day = weekday_codes.get(weekday_code)
+    if (actual_day == None):
+        raise Exception("Invalid weekday code")
     if (answered_day.lower() == actual_day.lower()):
-        print("Correct")
+        print(f"Correct - {round(end_time - start_time, 1)}s")
         return
     print(
         f"Incorrect\nAnswers:\nDay = {actual_day}\nDay Code = {day_code}\nMonth Code = {month_code}"
