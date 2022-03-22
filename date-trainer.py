@@ -83,7 +83,7 @@ def calculate_day_code(day):
 
 def calculate_month_code(month):
     month_code = month_codes.get(month)
-    if (month_code == None):
+    if month_code is None:
         raise Exception("Invalid month input")
     return month_code
 
@@ -132,9 +132,9 @@ def calculate_day_components(full_date):
 
 def quiz():
     print("\nQUIZ:")
-    answered_year_code = handle_num_input("Year code? ")
-    answered_month_code = handle_num_input("Month code? ")
     answered_day_code = handle_num_input("Day code? ")
+    answered_month_code = handle_num_input("Month code? ")
+    answered_year_code = handle_num_input("Year code? ")
     answered_leap_year = input("Leap year? ")
     answered_day = input("What day? ")
     return answered_day_code, answered_month_code, answered_year_code, answered_leap_year, answered_day
@@ -174,7 +174,7 @@ def quick_fire_quiz_mode():
     answered_day = input("What day? ")
     end_time = time.time()
     actual_day = weekday_codes.get(weekday_code)
-    if (actual_day == None):
+    if actual_day is None:
         raise Exception("Invalid weekday code")
     if (answered_day.lower() == actual_day.lower()):
         print(f"Correct - {round(end_time - start_time, 1)}s")
